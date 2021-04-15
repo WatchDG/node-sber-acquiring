@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": [
+      "es5",
+      "es6"
+    ],
+    "target": "es2020",
+    "sourceMap": false,
+    "strict": true,
+    "declaration": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "src/main.ts"
+  ]
+}
