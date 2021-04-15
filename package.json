@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "npx tsc",
-    "run": "npx ts-node src/main.ts"
+    "run": "npx ts-node src/main.ts",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "http-instance": "^7.0.4",
