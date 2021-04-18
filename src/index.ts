@@ -1,7 +1,9 @@
 import {HttpInstance} from "http-instance";
 import {URLSearchParams} from 'url';
-import {fail, ok, TResultAsync, tryCatchAsync, tryCatch} from "node-result";
-import {IncomingHttpHeaders} from "http";
+import {fail, ok, tryCatchAsync, tryCatch, TResult} from "node-result";
+import type {TResultAsync} from "node-result";
+import type {IncomingHttpHeaders} from "http";
+import {createPublicKey, verify} from "crypto";
 
 interface AuthLogin {
     userName: string;
@@ -133,5 +135,23 @@ export class SberAcquiring {
         })).unwrap();
         (SberAcquiring.checkBody(status, headers, data)).unwrap();
         return ok(data!);
+    }
+
+    @tryCatch
+    static verifyCallback(qs: string, cert: string, algorithm: string = 'RSA-SHA512'): TResult<boolean, Error> {
+
+        const object = Object.fromEntries(qs.split('&').map((param) => param.split('=')));
+
+        const checksum = object.checksum;
+
+        const data = Object.keys(object)
+            .filter((key) => key !== 'sign_alias' && key !== 'checksum')
+            .sort()
+            .map((key) => `${key};${object[key]};`)
+            .join('');
+
+        const publicKey = createPublicKey(cert);
+
+        return ok(verify(algorithm, Buffer.from(data), publicKey, Buffer.from(checksum, 'hex')));
     }
 }
