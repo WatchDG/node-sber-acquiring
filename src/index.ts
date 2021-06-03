@@ -23,6 +23,7 @@ type CreateOrder = {
     amount: number;
     returnUrl: string;
     failUrl?: string;
+    dynamicCallbackUrl?: string;
 };
 
 type Order = {
