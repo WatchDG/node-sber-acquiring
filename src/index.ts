@@ -42,7 +42,8 @@ type OrderStatus = {
         depositedAmount?: number;
         refundedAmount?: number;
         feeAmount?: number;
-    }
+    };
+    date: number;
 }
 
 const isAuthLogin = (params: AuthLogin | AuthToken): params is AuthLogin => !!(params as AuthLogin).userName && !!(params as AuthLogin).password;
